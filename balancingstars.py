@@ -44,6 +44,7 @@ for i in range(len(ip)):
     elif ip[i] in [")","]","}"]:
         if open_is_there == 0 or validate(ip[i],stack[top]) == False or len(stack)- top <= 2:
             del stack[top:len(stack)]
+            flag = 1
             top = rev_iter(stack)
             continue
 if len(stack) == 0 and open_is_there == 1 and flag == 0 and star_is_there == 1:
