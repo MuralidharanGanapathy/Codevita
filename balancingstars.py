@@ -39,7 +39,7 @@ for i in range(len(ip)):
         top = rev_iter(stack)
         balance_counter += 1
     elif ip[i] in [")","]","}"]:
-        if open_is_there == 0 or validate(ip[i],stack[top]) == False or len(stack)- top < 2:
+        if open_is_there == 0 or validate(ip[i],stack[top]) == False or len(stack)- top <= 2:
             del stack[top:len(stack)]
             top = rev_iter(stack)
             continue
