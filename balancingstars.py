@@ -6,37 +6,40 @@ def validate(close,open):
     if close == ")" and open == "(":
         return True
     return False
+def rev_iter(s):
+    for i in range(len(s)-1,-1,-1):
+        if s[i] in ["{","[","("]:
+            return i
+    return -1
+
+balance_counter = 0
+ip = input()
 stack = []
 top = -1
-ip = input()
-balance = 0
-open_is_there_flag = 0
-answer = ""
-balance_counter = 0
-val_flag = 0 
-for i in ip:
-    if i in ["{","[","("]:
-        stack.append(i)
-        top += 1
-        open_is_there_flag = 1
-    if i == "*" and open_is_there_flag == 1:
-        stack.append(i)
-        top += 1
-    if i == "*" and open_is_there_flag == 0:
-        val_flag = 1
-        
-    if i in ["}","]",")"] and open_is_there_flag == 0:
-        answer ="NO"
-        continue    
-    if i in ["}","]",")"] and open_is_there_flag == 1:
-        if stack[top] == "*" and stack[top-1] == "*" and validate(i,stack[top-2]) == True:
-            del stack[top]
-            del stack[top - 1]
-            del stack[top - 2]
-            top = top - 3
-            balance_counter += 1
-if len(stack) == 0 and val_flag == 0:
-    answer = "YES"
+open_is_there = 0
+ans = ""
+for i in range(len(ip)):
+    if ip[i] in ["(","{","["]:
+        stack.append(ip[i])
+        top = i
+        open_is_there = 1
+    if ip[i] == "*" and open_is_there == 1:
+        stack.append(ip[i])
+    if ip[i] == "*" and open_is_there == 0:
+        answer = "NO"
+        continue
+    if ip[i] in ["]",")","}"] and open_is_there == 0:
+        answer = "NO"
+        continue
+    if ip[i] in [")","]","}"] and open_is_there == 1 and validate(ip[i],ip[top]) == True and i - top >= 2:
+        del stack[top:i]
+        top = rev_iter(stack)
+        balance_counter += 1
+    else:
+        continue
+if len(stack) == 0 and open_is_there == 1:
+    ans = "YES"
 else:
-    answer = "NO"
-print(answer, balance_counter)
+    ans = "NO"
+print(ans, balance_counter)
+        
