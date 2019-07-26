@@ -17,6 +17,7 @@ ip = input()
 stack = []
 top = -1
 open_is_there = 0
+star_is_there = 0
 ans = ""
 flag = 0
 if ip[0] not in ["{","(","["]:
@@ -28,8 +29,10 @@ for i in range(len(ip)):
         open_is_there = 1
     if ip[i] == "*" and open_is_there == 1:
         stack.append(ip[i])
+        star_is_there = 1
     if ip[i] == "*" and open_is_there == 0:
         answer = "NO"
+        star_is_there = 1
         continue
     if ip[i] in ["]",")","}"] and open_is_there == 0:
         answer = "NO"
@@ -43,9 +46,8 @@ for i in range(len(ip)):
             del stack[top:len(stack)]
             top = rev_iter(stack)
             continue
-if len(stack) == 0 and open_is_there == 1 and flag == 0:
+if len(stack) == 0 and open_is_there == 1 and flag == 0 and star_is_there == 1:
     answer = "YES"
 else:
     answer = "NO"
 print(answer, balance_counter)
-        
